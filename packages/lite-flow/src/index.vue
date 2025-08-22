@@ -1,57 +1,99 @@
  <template>
-    <div ref="container" style="width: 100%;height:100%"></div>
+   <div class="editor">
+    <div class="editor-header">
+      <Header v-if="showLf"  :lf="lfInstance"></Header>
+    </div>
+    <div class="editor-content">
+      <div class="editor-sider">
+        <Sider v-if="showLf"  :lf="lfInstance"></Sider>
+      </div>
+      <!-- 工具栏 -->
+      <Control v-if="showLf" class="editor-control" :lf="lfInstance"></Control>
+      <div class="editor-canvas">
+        <div ref="container" style="width: 100%;height:100%"></div>
+      </div>
+    </div>
+  </div>
+ 
   </template>
   <script lang="ts" setup>
-  import { onMounted, ref, watch } from 'vue';
-  import LogicFlow from "@logicflow/core";
-  import "@logicflow/core/lib/style/index.css";
+  import { onMounted, ref, watch,reactive } from 'vue';
+  import LogicFlow from "@logicflow/core"; 
+  import { Menu, Snapshot, MiniMap } from '@logicflow/extension';
+  import "@logicflow/core/lib/style/index.css"; 
   import '@logicflow/extension/lib/style/index.css';
-  import Flow from './dnd-panel';
-  import './dnd-panel/flow.css';
-  import  {  LiteFlowHighLightType } from './types';
-  import  { LiteFlowProps } from './types/props';
-  import  { NodeStateEnum } from './types/enums';
-  const container = ref<HTMLElement>();
-  const props = defineProps(LiteFlowProps);
-  LogicFlow.use(Flow, {
-    ...props,
-  });
-const emits = defineEmits(['update:value', 'on-init', 'on-render', 'on-save'])
-const lfInstance = ref();
+  import '@logicflow/extension/lib/style/index.css'; 
+  import Sider from './layout/Sider.vue' 
+  import Control from './layout/Control.vue'
+  import Header from './layout/Header.vue'
+  import parallelNode from './nodes/parallel/index'
+  import  { LiteFlowProps } from './types/props'; 
+  const container = ref<HTMLElement>();  
+  const props = defineProps(LiteFlowProps);  
+  const emits = defineEmits(['update:value', 'on-init', 'on-render', 'on-save'])
+  let lfInstance = ref();
+  let showLf = ref(false);
 
-/**
- * 设置高亮数据
- * @param data 
- */
- const setHighLight = (data: LiteFlowHighLightType) =>{
-  if(!data) return;
-  const lf = lfInstance.value;
-  if(!lf) return;
-  // 设置历史节点state属性为history
-  if(Array.isArray(data.historyNodeNames) && data.historyNodeNames.length) {
-    data.historyNodeNames.forEach((nodeId :any)=>{
-      lf.getNodeModelById(nodeId)?.setProperties({
-        state: NodeStateEnum.history,
-      });
-    })
-  }
-  // 设置历史边state属性为history
-  if(Array.isArray(data.historyEdgeNames) &&data.historyEdgeNames.length) {
-    data.historyEdgeNames.forEach((edgeId : any)=>{
-      lf.getEdgeModelById(edgeId)?.setProperties({
-      state: NodeStateEnum.history,
-    });
-    })
-  }
-  // 设置活跃节点state属性为active
-  if(Array.isArray(data.activeNodeNames) && data.activeNodeNames.length) {
-    data.activeNodeNames.forEach((nodeId : any) =>{
-      lf.getNodeModelById(nodeId)?.setProperties({
-        state: NodeStateEnum.active,
-      });
-    })
-  }
+
+const registerElements = (lf: LogicFlow) => {
+    parallelNode(lf)
+   
 }
+
+const LfEvent = (lf: LogicFlow) => {
+  lf.on('node:dbclick', ({ data }) => {
+     
+  });
+  lf.on('edge:dbclick', ({ data }) => {
+    
+  });
+  //来自边的事件中心发出的事件
+  lf.on('edge:app-config', (res) => {
+    
+  });
+  lf.on('element:click', () => {
+        
+  });
+  lf.on('blank:click', () => {
+     
+  });
+  lf.on('connection:not-allowed', (data) => {
+     
+  });
+
+  lf.on('edge:add', ({ data }) => {
+    
+  });
+
+  lf.on('edge:delete', ({ data }) => {
+     
+  });
+};
+
+
+let customTheme = reactive({
+  background: {
+    backgroundColor: "#f0f4fb",
+  },
+  grid: {
+    size: 10,
+  },
+  keyboard: {
+    enabled: true,
+  },
+  adjustEdge: false, //允许调整边
+  adjustEdgeStartAndEnd: false, //是否允许拖动边的端点来调整连线
+  edgeSelectedOutline: true, //鼠标 hover 的时候显示边的外框
+  // edgeTextDraggable: true,
+  hoverOutline: false,
+  nodeTextEdit: false, //节点是否可编辑。false不可编辑
+  edgeTextEdit: false, //边是否可编辑。false不可编辑
+  autoExpand: false, //点拖动靠近画布边缘时是否自动扩充画布
+  textEdit: false, //是否开启文本编辑
+  snapline: false, //对齐线。false不开启
+});
+
+
 /**
  * 自定义渲染
  * 1.默认渲染
@@ -62,22 +104,67 @@ const myRender = (data: any) =>{
   const lf = lfInstance.value;
   if(!lf) return;
   lf.render(data);
-  // 设置亮亮数据
-  setHighLight(props.highLight)
   // emits render事件
   emits('on-render', lf)
 }
+ 
+
 const isHistoryChange = ref(false)
+
 onMounted(()=>{
   if(!container.value) return;
   lfInstance.value = new LogicFlow({
+    ...customTheme,
     container: container.value,
-    grid: true,
-    isSilentMode: props.viewer
+    plugins: [Menu, MiniMap, Snapshot],
   });
-  const lf = lfInstance.value;
+  const lf = lfInstance.value; 
+  showLf.value =true
+  registerElements(lf)
+  LfEvent(lf)
+ // 设置主题
+ lf.setTheme({
+    baseNode: {
+      fill: '#FFFFFF',
+      stroke: '#000000',
+      strokeWidth: 1,
+    },
+    circle: {
+      stroke: '#000000',
+      strokeWidth: 1,
+    },
+    rect: {
+      fill: '#FFFFFF',
+      stroke: '#000000',
+      outlineColor: '#88f',
+      strokeWidth: 1,
+    },
+    polygon: {
+      strokeWidth: 1,
+    },
+    polyline: {
+      stroke: '#000000',
+      hoverStroke: '#000000',
+      selectedStroke: '#000000',
+      strokeWidth: 1,
+    },
+    nodeText: {
+      color: '#000000',
+      overflowMode: 'ellipsis', //超出显示省略号
+      padding: '0 15px',
+      fontSize: 14,
+    },
+    edgeText: {
+      color: '#000000',
+      background: {
+        fill: "#f0f4fb",
+      },
+    },
+  });
   // emits初始化事件
   emits('on-init', lf)
+  
+
   const { eventCenter } = lf.graphModel;
   // 监听画布变化事件
   eventCenter.on('history:change', ()=>{
@@ -94,10 +181,6 @@ onMounted(()=>{
     // emits('update:value', data)
     myRender(data)
   })
-  // 监听自定义的update:highlight事件
-  eventCenter.on('update:highlight',(data: any) =>{
-    setHighLight(data)
-  })
   // 监听自定义的save事件
   eventCenter.on('custom:save', (data: any) =>{
     emits('on-save', data)
@@ -112,9 +195,107 @@ watch(()=>props.value, (newVal)=>{
 }, {
   deep: true
 })
-watch(()=>props.highLight, (newVal)=>{
-  setHighLight(newVal)
-}, {
-  deep: true
-})
+
+const onStartDrag = ({e,nodeType})  => {
+  console.log(nodeType)
+  lfRef.value?.dnd.startDrag(nodeType);
+  };
   </script>
+
+<style scoped>
+
+.editor {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f0f0;
+
+  .editor-header {
+    height: 50px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px
+  }
+
+  .editor-content {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+
+ .editor-sider {
+    width: 200px;
+    background-color: #fff;
+    border-right: 1px solid #ccc;
+  }
+
+.editor-control {
+  position: absolute;
+  top: 68px;
+  right: 100px;
+  z-index: 2;
+}
+  .editor-canvas {
+    flex: 1;
+    background-color: #fff;
+  }
+}
+
+.lf-node-text-auto-wrap {
+  cursor: pointer;
+}
+
+/* 适应节点图标 */
+.lf-node-text-ellipsis-content {
+  padding: 0 8px 0 34px !important;
+}
+.node-title {
+  height: 40px;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #e6f7ff;
+  box-sizing: border-box;
+  padding: 10px 10px 10px 6px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.node-icon {
+  width: 26px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+.node-name > span {
+  border: none !important;
+} 
+
+.lf-mini-map {
+  border-radius: 5;
+  border: none !important;
+  box-shadow: 3px 0 10px 1px rgb(228, 224, 219);
+}
+
+.lf-mini-map-header {
+  border: none !important;
+  font-size: 13px;
+  height: 24px !important;
+  line-height: 24px !important;
+  background-color: #ecf5ff !important;
+  background-image: none !important;
+}
+
+.lf-mini-map-close {
+  top: 2px !important;
+}
+
+@keyframes lf_animate_dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+</style>

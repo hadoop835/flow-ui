@@ -19,7 +19,17 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "types": ["element-plus/global"]
   },
-  "include": ["vite.config.ts"]
+  "include": [
+    "vite.config.ts",
+    "examples/**/*.ts", 
+    "examples/**/*.tsx", 
+    "examples/**/*.vue",
+    "packages/**/*.ts", 
+    "packages/**/*.tsx", 
+    "packages/**/*.vue", 
+    "shims-vue.d.ts", 
+  ]
 }

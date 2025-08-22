@@ -13,12 +13,13 @@
     "noUncheckedSideEffectImports": true
   },
   "include": [
+    "vite.config.ts",
     "examples/**/*.ts", 
     "examples/**/*.tsx", 
     "examples/**/*.vue",
     "packages/**/*.ts", 
     "packages/**/*.tsx", 
     "packages/**/*.vue", 
-    "shims-vue.d.ts"
+    "shims-vue.d.ts", 
   ]
 }
