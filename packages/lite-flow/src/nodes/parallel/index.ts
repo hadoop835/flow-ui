@@ -2,6 +2,7 @@ import { createApp, h } from 'vue';
 import parallelNode from './parallel.vue';
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import { randomNumber } from '../../../../utils/index';
 export default function registerConnect(lf) {
     lf.register('parallel', ({ HtmlNode, HtmlNodeModel }) => {
       class htmlParallelNode extends HtmlNode {
@@ -25,7 +26,7 @@ export default function registerConnect(lf) {
       }
       class htmlParallelModel extends HtmlNodeModel {
         createId() {
-          return Math.random()+"_parallel"; //id用随机数数字
+          return randomNumber(); //id用随机数数字
         }
         constructor(data, graphModel) {
           super(data, graphModel);
@@ -48,14 +49,14 @@ export default function registerConnect(lf) {
           const { id, x, y, width, height } = this;
           const anchors = [];
           anchors.push({
-            x,
-            y: y - height / 2,
+            x: x - width / 2,
+            y,
             id: `${id}_incomming`,
             type: 'incomming',
           });
           anchors.push({
-            x,
-            y: y + height / 2,
+            x: x + width / 2,
+            y,
             id: `${id}_outgoing`,
             type: 'outgoing',
           });

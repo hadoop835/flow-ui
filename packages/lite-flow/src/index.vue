@@ -27,6 +27,8 @@
   import Control from './layout/Control.vue'
   import Header from './layout/Header.vue'
   import parallelNode from './nodes/parallel/index'
+  import startNode from './nodes/start/start'
+  import endNode from './nodes/end/end'
   import  { LiteFlowProps } from './types/props'; 
   const container = ref<HTMLElement>();  
   const props = defineProps(LiteFlowProps);  
@@ -37,6 +39,8 @@
 
 const registerElements = (lf: LogicFlow) => {
     parallelNode(lf)
+    startNode(lf)
+    endNode(lf)
    
 }
 
