@@ -3,34 +3,36 @@
       <!-- 画布左上角几个按钮 -->
       <div class="panelLayout" style="background: #fff; top: -4px; left: 59px; height: 200px">
         <el-tooltip content="放大" title="放大" placement="left">
-          <el-icon @click="$_zoomIn"><ZoomIn /></el-icon>
+          <span  @click="$_zoomIn"><SvgIcon icon-class="zoomin" /></span>
         </el-tooltip>
         <el-tooltip content="缩小" title="缩小" placement="left">
-          <el-icon @click="$_zoomOut"><ZoomOut /></el-icon>
+          <span @click="$_zoomOut"><SvgIcon icon-class="zoomout"  /></span>
         </el-tooltip>
         <el-tooltip content="大小适应" title="大小适应" placement="left">
-          <el-icon @click="$_zoomReset"><Aim /></el-icon>
+          <span @click="$_zoomReset"><SvgIcon icon-class="zoomreset"  /></span>
         </el-tooltip>
-        <el-tooltip content="定位还原(大小&定位)" title="定位还原(大小&定位)" placement="left">
-          <el-icon @click="$_reset"><Position /></el-icon>
+        <el-tooltip content="定位还原(大小&定位)" title="定位还原(大小&定位)" placement="left"> 
+          <span  @click="$_reset"><SvgIcon icon-class="position" /></span>
         </el-tooltip>
-        <el-tooltip content="上一步" title="上一步" placement="left">
-          <el-icon :disabled="undoDisable" @click="$_undo"><DArrowLeft /></el-icon>
+        <el-tooltip content="上一步" title="上一步" placement="left"> 
+          <span @click="$_undo"><SvgIcon icon-class="undo"  /></span>
         </el-tooltip>
         <el-tooltip content="下一步" title="下一步" placement="left">
-          <el-icon :disabled="redoDisable" @click="$_redo"><DArrowRight /></el-icon>
+          <span @click="$_redo"><SvgIcon icon-class="redo"  /></span>
         </el-tooltip>
-        <el-tooltip content="小地图" title="小地图" placement="left">
-          <el-icon @click="$_showMiniMap"><MapLocation /></el-icon>
+        <el-tooltip content="小地图" title="小地图" placement="left" >
+          <span @click="$_showMiniMap"><SvgIcon icon-class="map" /></span>
         </el-tooltip>
         <el-tooltip content="下载图片" title="下载图片" placement="left">
-          <el-icon @click="$_download"><Download /></el-icon>
+          <span @click="$_download"><SvgIcon icon-class="download"  /></span>
         </el-tooltip>
       </div>
     </div>
   </template>
   <script setup lang="ts">
   import { ref, onMounted} from 'vue';
+  import SvgIcon from '../../../svg-icon/index.vue';
+  import '@logicflow/extension/lib/style/index.css'; 
   
   const props = defineProps({
     lf: Object,

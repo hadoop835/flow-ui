@@ -23,6 +23,18 @@ const nodeTypeDef = {
         "color": "#ffffff",
         "icon": "switch"
     },
+    "when": {
+        "type": "when",
+        "text": "并行节点",
+        "color": "#ffffff",
+        "icon": "when"
+    },
+    "summary": {
+        "type": "summary",
+        "text": "合并节点",
+        "color": "#ffffff",
+        "icon": "summary"
+    },
     "for": {
         "type": "for",
         "text": "For循环",
@@ -46,10 +58,8 @@ const nodeTypeDef = {
 
 const groupMap = [
     {"text":"开关节点","value":"switch","nodes":["start","end"]},
-    {"text":"节点","value":"gateway","nodes":["switch","if"]},
-    {"text":"选择节点","value":"gateway","nodes":["switch","if"]},
-    {"text":"循环节点","value":"loop","nodes":["for","iterator"]},
-    {"text":"活动节点","value":"activity","nodes":["common"]}
+    {"text":"编排节点","value":"gateway","nodes":["when","common","switch","if","summary"]},
+    {"text":"循环节点","value":"loop","nodes":["for","iterator"]}, 
 ]
 
 

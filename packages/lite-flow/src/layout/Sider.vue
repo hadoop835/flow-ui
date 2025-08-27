@@ -20,7 +20,7 @@ import { ref,onMounted,reactive} from 'vue';
 import { nodeTypeDef, groupMap } from '../types/nodes';
 import SvgIcon from '../../../svg-icon/index.vue'; 
 // 初始展开的面板
-const activeNames = ref(['switch','gateway','activity','loop'])
+const activeNames = ref(['switch','gateway','loop'])
  
 
 const props = defineProps({
