@@ -4,7 +4,7 @@
         <el-space wrap direction="vertical" style="width: 100%;">
                 <div class="node"  @selectstart.prevent  v-for="nodeType in group.nodes" :key="nodeType" @mousedown="mousedownFunc(nodeTypeDef[nodeType])" >
                     <div class="node-icon" :style="{ 'background-color': nodeTypeDef[nodeType].color}">
-                        <font-awesome-icon :icon="nodeTypeDef[nodeType].icon" />
+                      <SvgIcon :icon-class="nodeTypeDef[nodeType].icon" />
                     </div>
                     <div class="node-title">{{ nodeTypeDef[nodeType].text}}</div>
                 </div>
@@ -18,9 +18,9 @@
  import LogicFlow from "@logicflow/core"; 
 import { ref,onMounted,reactive} from 'vue';
 import { nodeTypeDef, groupMap } from '../types/nodes';
-import { lfJson2Xml } from "@logicflow/extension";
+import SvgIcon from '../../../svg-icon/index.vue'; 
 // 初始展开的面板
-const activeNames = ref(['switch','gateway','activity'])
+const activeNames = ref(['switch','gateway','activity','loop'])
  
 
 const props = defineProps({

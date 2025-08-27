@@ -1,7 +1,8 @@
 import { createApp, h } from 'vue';
 import start from './start.vue';
 import { randomNumber } from '../../../../utils/index';
-
+import ElementPlus,{ElMessage} from 'element-plus'
+import 'element-plus/dist/index.css'
 export default function registerConnect(lf) {
   lf.register('start', ({ HtmlNode, HtmlNodeModel }) => {
     class startNode extends HtmlNode {
@@ -49,6 +50,18 @@ export default function registerConnect(lf) {
         this.width = width;
         this.height = height;
         this.radius = 50;
+        this.targetRules = [
+          {
+            message: '【开始节点】不允许连接输入',
+            validate: (sourceNode, targetNode, sourceAnchor, targetAnchor) => {
+              ElMessage.error('【开始节点】不允许连接输入'); 
+              return false;
+            },
+          },
+        ];
+        this.sourceRules = [
+           
+        ];
       }
     }
     return {

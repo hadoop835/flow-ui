@@ -1,11 +1,11 @@
 import { createApp, h } from 'vue';
-import parallelNode from './parallel.vue';
+import switchNode from './switch.vue';
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import { randomNumber } from '../../../../utils/index';
 export default function registerConnect(lf) {
-    lf.register('parallel', ({ HtmlNode, HtmlNodeModel }) => {
-      class htmlParallelNode extends HtmlNode {
+    lf.register('switch', ({ HtmlNode, HtmlNodeModel }) => {
+      class htmlSwitchNode extends HtmlNode {
         setHtml(rootEl) {
           const { model } = this.props;
           const el = document.createElement('div');
@@ -15,7 +15,7 @@ export default function registerConnect(lf) {
           // Vue 3 使用 createApp 来创建应用实例
           const app = createApp({
             render: () =>
-              h(parallelNode, {
+              h(switchNode, {
                 properties: model.properties,
               }),
           });
@@ -24,7 +24,7 @@ export default function registerConnect(lf) {
           app.mount(el);
         }
       }
-      class htmlParallelModel extends HtmlNodeModel {
+      class htmlSwitchModel extends HtmlNodeModel {
         createId() {
           return randomNumber(); //id用随机数数字
         }
@@ -81,8 +81,8 @@ export default function registerConnect(lf) {
         }
       }
       return {
-        view: htmlParallelNode,
-        model: htmlParallelModel,
+        view: htmlSwitchNode,
+        model: htmlSwitchModel,
       };
     });
   }

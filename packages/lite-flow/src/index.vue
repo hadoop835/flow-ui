@@ -14,46 +14,77 @@
       </div>
     </div>
   </div>
- 
+   <!-- 属性面板 -->
+   <PropertyDialog v-if="showAttribute" :title="title" :nodeData="nodeData" :flowDetail="flowDetail" :lf="lfInstance"  @closed="showAttribute = false"> </PropertyDialog>
   </template>
   <script lang="ts" setup>
   import { onMounted, ref, watch,reactive } from 'vue';
-  import LogicFlow from "@logicflow/core"; 
+  import LogicFlow,{NodeData}from "@logicflow/core"; 
   import { Menu, Snapshot, MiniMap } from '@logicflow/extension';
-  import "@logicflow/core/lib/style/index.css"; 
-  import '@logicflow/extension/lib/style/index.css';
+  import "@logicflow/core/lib/style/index.css";  
   import '@logicflow/extension/lib/style/index.css'; 
   import Sider from './layout/Sider.vue' 
   import Control from './layout/Control.vue'
-  import Header from './layout/Header.vue'
-  import parallelNode from './nodes/parallel/index'
+  import Header from './layout/Header.vue' 
+  import commonNode from './nodes/common/common'
+  import ifNode  from './nodes/if/if'
+  import switchNode from './nodes/switch/switch'
+  import forNode  from  './nodes/for/for'
+  import iteratorNode from './nodes/iterator/iterator'
   import startNode from './nodes/start/start'
   import endNode from './nodes/end/end'
+  import whenNode from './nodes/when/when'
+  import summaryNode from './nodes/summary/summary'
   import  { LiteFlowProps } from './types/props'; 
+  import PropertyDialog from './setting/property-dialog.vue';
+
   const container = ref<HTMLElement>();  
   const props = defineProps(LiteFlowProps);  
   const emits = defineEmits(['update:value', 'on-init', 'on-render', 'on-save'])
   let lfInstance = ref();
   let showLf = ref(false);
 
+  //弹出框
+  let nodeData = ref(null); 
+  let showAttribute = ref(false);
 
 const registerElements = (lf: LogicFlow) => {
-    parallelNode(lf)
     startNode(lf)
     endNode(lf)
-   
+    commonNode(lf)
+    ifNode(lf)
+    switchNode(lf)
+    forNode(lf)
+    iteratorNode(lf)
+    whenNode(lf)
+    summaryNode(lf)
 }
 
 const LfEvent = (lf: LogicFlow) => {
   lf.on('node:dbclick', ({ data }) => {
-     
+    nodeData.value = data;
+    if (['start', 'end', 'for', 'iterator', 'common', 'if', 'switch','when','summary'].includes(data.type)) {
+      showAttribute.value = true;
+    }
   });
   lf.on('edge:dbclick', ({ data }) => {
+     const  nodeConfig  = lf.getNodeDataById(data.sourceNodeId);
+     if(nodeConfig?.type==="if"){
+        showAttribute.value = true;
+        data.properties={
+             "if":true
+        }
+        nodeData.value = data;
+     }else{
+      showAttribute.value = false;
+     }
+    console.log("nodeConfig",data)
     
   });
   //来自边的事件中心发出的事件
-  lf.on('edge:app-config', (res) => {
-    
+  lf.on('edge:app-config', (data) => {
+    nodeData.value = data;
+    showAttribute.value = true;
   });
   lf.on('element:click', () => {
         

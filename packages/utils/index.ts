@@ -11,3 +11,26 @@ export const randomNumber = () => {
     }
     return identifier;
   };
+
+
+  /**
+ * @description:根据数组将value变成中文
+ * @param {*} value value值
+ * @param {*} arr 枚举数据
+ * @param {*} typeValue 英文字段
+ * @param {*} typeLabel 中文字段
+ * @return {*}
+ */
+export const getLabelByValue = (value, arr, typeValue, typeLabel) => {
+  console.log("getLabelByValue",value)
+  if(value === "polyline"){
+     return "连线"
+  }else{
+    for(let menu in arr){
+      let obj = arr[menu]
+      if(obj[typeValue]===value){
+         return obj[typeLabel];
+      }
+   }
+  }
+};

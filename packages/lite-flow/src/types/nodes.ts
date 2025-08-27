@@ -2,45 +2,55 @@ const nodeTypeDef = {
     "start": {
         "type": "start",
         "text": "开始",
-        "color": "#0820e2",
-        "icon": "fa-solid fa-play",
+        "color": "#ffffff",
+        "icon": "start",
     },
     "end": {
         "type": "end",
         "text": "结束",
-        "color": "#5d1dd0",
-        "icon": "fa-solid fa-stop",
+        "color": "#ffffff",
+        "icon": "end",
     },
-    "inclusive": {
-        "type": "inclusive",
-        "text": "包含网关",
-        "color": "#f1711f",
-        "icon": "fa-solid fa-genderless",
+    "if": {
+        "type": "if",
+        "text": "布尔节点",
+        "color": "#ffffff",
+        "icon": "if"
     },
-    "exclusive": {
-        "type": "exclusive",
-        "text": "排他网关",
-        "color": "#ae0e6a",
-        "icon": "fa-solid fa-xmark",
+    "switch": {
+        "type": "switch",
+        "text": "选择节点",
+        "color": "#ffffff",
+        "icon": "switch"
     },
-    "parallel": {
-        "type": "parallel",
-        "text": "并行网关",
-        "color": "#7e48ee",
-        "icon": "fa-solid fa-plus"
+    "for": {
+        "type": "for",
+        "text": "For循环",
+        "color": "#ffffff",
+        "icon": "for",
     },
-    "activity": {
-        "type": "activity",
-        "text": "活动节点",
-        "color": "#047cc2",
-        "icon": "fa-solid fa-user",
+    "iterator": {
+        "type": "iterator",
+        "text": "iterator循环",
+        "color": "#ffffff",
+        "icon": "iterator",
+    },
+    "common": {
+        "type": "common",
+        "text": "普通节点",
+        "color": "#ffffff",
+        "icon": "common",
     }
 }
 
+
 const groupMap = [
     {"text":"开关节点","value":"switch","nodes":["start","end"]},
-    {"text":"网关节点","value":"gateway","nodes":["inclusive","exclusive","parallel"]},
-    {"text":"活动节点","value":"activity","nodes":["activity"]}
+    {"text":"节点","value":"gateway","nodes":["switch","if"]},
+    {"text":"选择节点","value":"gateway","nodes":["switch","if"]},
+    {"text":"循环节点","value":"loop","nodes":["for","iterator"]},
+    {"text":"活动节点","value":"activity","nodes":["common"]}
 ]
+
 
 export {nodeTypeDef,groupMap}
