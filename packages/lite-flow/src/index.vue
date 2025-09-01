@@ -26,15 +26,15 @@
   import Sider from './layout/Sider.vue' 
   import Control from './layout/Control.vue'
   import Header from './layout/Header.vue' 
-  import commonNode from './nodes/common/common'
-  import ifNode  from './nodes/if/if'
-  import switchNode from './nodes/switch/switch'
-  import forNode  from  './nodes/for/for'
-  import iteratorNode from './nodes/iterator/iterator'
-  import startNode from './nodes/start/start'
-  import endNode from './nodes/end/end'
-  import whenNode from './nodes/when/when'
-  import summaryNode from './nodes/summary/summary'
+  import commonNode from './nodes/common/common-node'
+  import ifNode  from './nodes/if/if-node'
+  import switchNode from './nodes/switch/switch-node'
+  import forNode  from  './nodes/for/for-node'
+  import iteratorNode from './nodes/iterator/iterator-node'
+  import startNode from './nodes/start/start-node'
+  import endNode from './nodes/end/end-node'
+  import whenNode from './nodes/when/when-node'
+  import summaryNode from './nodes/summary/summary-node'
   import  { LiteFlowProps } from './types/props'; 
   import PropertyDialog from './setting/property-dialog.vue';
 
@@ -333,4 +333,4 @@ const onStartDrag = ({e,nodeType})  => {
     stroke-dashoffset: 0;
   }
 }
-</style>
+</style>./nodes/iterator/iterator-node./nodes/start/start-node./nodes/summary/summary-node./nodes/switch/switch-node./nodes/when/when-node./nodes/common/common-node

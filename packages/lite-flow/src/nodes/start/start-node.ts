@@ -1,11 +1,11 @@
 import { createApp, h } from 'vue';
-import start from './start.vue';
+import startNode from './start-node.vue';
 import { randomNumber } from '../../../../utils/index';
 import ElementPlus,{ElMessage} from 'element-plus'
 import 'element-plus/dist/index.css'
 export default function registerConnect(lf) {
-  lf.register('start', ({ HtmlNode, HtmlNodeModel }) => {
-    class startNode extends HtmlNode {
+  lf.register('startNode', ({ HtmlNode, HtmlNodeModel }) => {
+    class startHtmlNode extends HtmlNode {
       setHtml(rootEl) {
         const { model } = this.props;
         const el = document.createElement('div');
@@ -15,7 +15,7 @@ export default function registerConnect(lf) {
         // Vue 3 使用 createApp 来创建应用实例
         const app = createApp({
           render: () =>
-            h(start, {
+            h(startNode, {
               properties: model.properties,
             }),
         });
@@ -24,7 +24,7 @@ export default function registerConnect(lf) {
         app.mount(el);
       }
     }
-    class startModel extends HtmlNodeModel {
+    class startHtmlModel extends HtmlNodeModel {
       createId() {
         return randomNumber();
       }
@@ -65,8 +65,8 @@ export default function registerConnect(lf) {
       }
     }
     return {
-      view: startNode,
-      model: startModel,
+      view: startHtmlNode,
+      model: startHtmlModel,
     };
   });
 }

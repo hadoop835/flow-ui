@@ -1,11 +1,11 @@
 import { createApp, h } from 'vue';
-import switchNode from './switch.vue';
-import ElementPlus from 'element-plus'
+import summaryNode from './summary-node.vue';
+import ElementPlus,{ElMessage} from 'element-plus'
 import 'element-plus/dist/index.css'
 import { randomNumber } from '../../../../utils/index';
 export default function registerConnect(lf) {
-    lf.register('switch', ({ HtmlNode, HtmlNodeModel }) => {
-      class htmlSwitchNode extends HtmlNode {
+    lf.register('summaryNode', ({ HtmlNode, HtmlNodeModel }) => {
+      class htmlSummaryNode extends HtmlNode {
         setHtml(rootEl) {
           const { model } = this.props;
           const el = document.createElement('div');
@@ -15,7 +15,7 @@ export default function registerConnect(lf) {
           // Vue 3 使用 createApp 来创建应用实例
           const app = createApp({
             render: () =>
-              h(switchNode, {
+              h(summaryNode, {
                 properties: model.properties,
               }),
           });
@@ -24,7 +24,7 @@ export default function registerConnect(lf) {
           app.mount(el);
         }
       }
-      class htmlSwitchModel extends HtmlNodeModel {
+      class htmlSummaryModel extends HtmlNodeModel {
         createId() {
           return randomNumber(); //id用随机数数字
         }
@@ -73,16 +73,38 @@ export default function registerConnect(lf) {
           }
           this.radius = 50;
           this.targetRules = [
-           
+              //   {
+              //     message: `【条件节点】只允许一个输入`,
+              //     validate: (sourceNode, targetNode, sourceAnchor, targetAnchor) => {
+              //       const edges = this.graphModel.getNodeIncomingEdge(targetNode.id);
+              //       if (edges.length >= 1) {
+              //         ElMessage.error('【条件节点】只允许一个输入')
+              //         return false;
+              //       } else {
+              //         return true;
+              //       }
+              //     },
+              //  },
           ];
           this.sourceRules = [
-            
+                //  {
+                //   message: `【条件节点】只允许2个输出`,
+                //   validate: (sourceNode, targetNode, sourceAnchor, targetAnchor) => {
+                //     const edges = this.graphModel.getNodeOutgoingEdge(sourceNode.id);
+                //     if (edges.length >= 2) {
+                //         ElMessage.error('【条件节点】只允许2个输出')
+                //         return false;
+                //      }else{
+                //         return true;
+                //      }
+                //      },
+                //   },
           ];
         }
       }
       return {
-        view: htmlSwitchNode,
-        model: htmlSwitchModel,
+        view: htmlSummaryNode,
+        model: htmlSummaryModel,
       };
     });
   }

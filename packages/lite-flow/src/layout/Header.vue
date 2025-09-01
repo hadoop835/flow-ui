@@ -39,7 +39,7 @@
   //保存
   const saveFunc = () => {
     graphData = props.lf.getGraphData();
-    console.log("json",graphData)
+    console.log("json",JSON.stringify(graphData))
   };
   
  

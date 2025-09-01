@@ -1,11 +1,11 @@
 import { createApp, h } from 'vue';
-import summaryNode from './summary.vue';
+import whenNode from './when-node.vue';
 import ElementPlus,{ElMessage} from 'element-plus'
 import 'element-plus/dist/index.css'
 import { randomNumber } from '../../../../utils/index';
 export default function registerConnect(lf) {
-    lf.register('summary', ({ HtmlNode, HtmlNodeModel }) => {
-      class htmlSummaryNode extends HtmlNode {
+    lf.register('whenNode', ({ HtmlNode, HtmlNodeModel }) => {
+      class htmlWhenNode extends HtmlNode {
         setHtml(rootEl) {
           const { model } = this.props;
           const el = document.createElement('div');
@@ -15,7 +15,7 @@ export default function registerConnect(lf) {
           // Vue 3 使用 createApp 来创建应用实例
           const app = createApp({
             render: () =>
-              h(summaryNode, {
+              h(whenNode, {
                 properties: model.properties,
               }),
           });
@@ -24,7 +24,7 @@ export default function registerConnect(lf) {
           app.mount(el);
         }
       }
-      class htmlSummaryModel extends HtmlNodeModel {
+      class htmlWhenModel extends HtmlNodeModel {
         createId() {
           return randomNumber(); //id用随机数数字
         }
@@ -87,24 +87,24 @@ export default function registerConnect(lf) {
                },
           ];
           this.sourceRules = [
-                 {
-                  message: `【条件节点】只允许2个输出`,
-                  validate: (sourceNode, targetNode, sourceAnchor, targetAnchor) => {
-                    const edges = this.graphModel.getNodeOutgoingEdge(sourceNode.id);
-                    if (edges.length >= 2) {
-                        ElMessage.error('【条件节点】只允许2个输出')
-                        return false;
-                     }else{
-                        return true;
-                     }
-                     },
-                  },
+                //  {
+                //   message: `【条件节点】只允许2个输出`,
+                //   validate: (sourceNode, targetNode, sourceAnchor, targetAnchor) => {
+                //     const edges = this.graphModel.getNodeOutgoingEdge(sourceNode.id);
+                //     if (edges.length >= 2) {
+                //         ElMessage.error('【条件节点】只允许2个输出')
+                //         return false;
+                //      }else{
+                //         return true;
+                //      }
+                //      },
+                //   },
           ];
         }
       }
       return {
-        view: htmlSummaryNode,
-        model: htmlSummaryModel,
+        view: htmlWhenNode,
+        model: htmlWhenModel,
       };
     });
   }

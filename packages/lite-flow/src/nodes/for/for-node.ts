@@ -1,11 +1,11 @@
 import { createApp, h } from 'vue';
-import commonNode from './common.vue';
-import ElementPlus,{ElMessage} from 'element-plus'
+import forNode from './for-node.vue';
+import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import { randomNumber } from '../../../../utils/index';
 export default function registerConnect(lf) {
-    lf.register('common', ({ HtmlNode, HtmlNodeModel }) => {
-      class htmlCommonNode extends HtmlNode {
+    lf.register('forNode', ({ HtmlNode, HtmlNodeModel }) => {
+      class htmlForNode extends HtmlNode {
         setHtml(rootEl) {
           const { model } = this.props;
           const el = document.createElement('div');
@@ -15,7 +15,7 @@ export default function registerConnect(lf) {
           // Vue 3 使用 createApp 来创建应用实例
           const app = createApp({
             render: () =>
-              h(commonNode, {
+              h(forNode, {
                 properties: model.properties,
               }),
           });
@@ -24,7 +24,7 @@ export default function registerConnect(lf) {
           app.mount(el);
         }
       }
-      class htmlCommonModel extends HtmlNodeModel {
+      class htmlForModel extends HtmlNodeModel {
         createId() {
           return randomNumber(); //id用随机数数字
         }
@@ -73,38 +73,16 @@ export default function registerConnect(lf) {
           }
           this.radius = 50;
           this.targetRules = [
-            {
-              message: `【普通节点】只允许一个输入`,
-              validate: (sourceNode, targetNode, sourceAnchor, targetAnchor) => {
-                const edges = this.graphModel.getNodeIncomingEdge(targetNode.id);
-                if (edges.length >= 1) {
-                  ElMessage.error('【普通节点】只允许一个输入')
-                  return false;
-                } else {
-                  return true;
-                }
-              },
-           },
+           
           ];
           this.sourceRules = [
-            {
-              message: `【普通节点】只允许1个输出`,
-              validate: (sourceNode, targetNode, sourceAnchor, targetAnchor) => {
-                const edges = this.graphModel.getNodeOutgoingEdge(sourceNode.id);
-                if (edges.length >= 1) {
-                    ElMessage.error('【普通节点】只允许1个输出')
-                    return false;
-                 }else{
-                    return true;
-                 }
-                 },
-              },
+            
           ];
         }
       }
       return {
-        view: htmlCommonNode,
-        model: htmlCommonModel,
+        view: htmlForNode,
+        model: htmlForModel,
       };
     });
   }
