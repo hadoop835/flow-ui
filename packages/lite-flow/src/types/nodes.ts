@@ -1,54 +1,54 @@
 const nodeTypeDef = {
     "start": {
-        "type": "start",
+        "type": "startNode",
         "text": "开始",
         "color": "#ffffff",
         "icon": "start",
     },
     "end": {
-        "type": "end",
+        "type": "endNode",
         "text": "结束",
         "color": "#ffffff",
         "icon": "end",
     },
     "if": {
-        "type": "if",
+        "type": "ifNode",
         "text": "布尔节点",
         "color": "#ffffff",
         "icon": "if"
     },
     "switch": {
-        "type": "switch",
+        "type": "switchNode",
         "text": "选择节点",
         "color": "#ffffff",
         "icon": "switch"
     },
     "when": {
-        "type": "when",
+        "type": "whenNode",
         "text": "并行节点",
         "color": "#ffffff",
         "icon": "when"
     },
     "summary": {
-        "type": "summary",
+        "type": "summaryNode",
         "text": "合并节点",
         "color": "#ffffff",
         "icon": "summary"
     },
     "for": {
-        "type": "for",
+        "type": "forNode",
         "text": "For循环",
         "color": "#ffffff",
         "icon": "for",
     },
     "iterator": {
-        "type": "iterator",
+        "type": "iteratorNode",
         "text": "iterator循环",
         "color": "#ffffff",
         "icon": "iterator",
     },
     "common": {
-        "type": "common",
+        "type": "commonNode",
         "text": "普通节点",
         "color": "#ffffff",
         "icon": "common",

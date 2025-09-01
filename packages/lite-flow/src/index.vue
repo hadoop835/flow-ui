@@ -63,7 +63,7 @@ const registerElements = (lf: LogicFlow) => {
 const LfEvent = (lf: LogicFlow) => {
   lf.on('node:dbclick', ({ data }) => {
     nodeData.value = data;
-    if (['start', 'end', 'for', 'iterator', 'common', 'if', 'switch','when','summary'].includes(data.type)) {
+    if (['startNode', 'endNode', 'forNode', 'iteratorNode', 'commonNode', 'ifNode', 'switchNode','whenNode','summaryNode'].includes(data.type)) {
       showAttribute.value = true;
     }
   });
@@ -231,10 +231,6 @@ watch(()=>props.value, (newVal)=>{
   deep: true
 })
 
-const onStartDrag = ({e,nodeType})  => {
-  console.log(nodeType)
-  lfRef.value?.dnd.startDrag(nodeType);
-  };
   </script>
 
 <style scoped>

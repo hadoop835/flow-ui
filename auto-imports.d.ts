@@ -97,9 +97,6 @@ declare global {
   // @ts-ignore
   export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, ShallowRef, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
-  // @ts-ignore
-  export type { ColorEnum, NodeStateEnum, NodeTypeEnum } from './packages/lite-flow/src/types/enums'
-  import('./packages/lite-flow/src/types/enums')
 }
 
 // for vue template auto import
@@ -107,11 +104,8 @@ import { UnwrapRef } from 'vue'
 declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
-    readonly ColorEnum: UnwrapRef<typeof import('./packages/lite-flow/src/types/enums')['ColorEnum']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly LiteFlowProps: UnwrapRef<typeof import('./packages/lite-flow/src/types/props')['LiteFlowProps']>
-    readonly NodeStateEnum: UnwrapRef<typeof import('./packages/lite-flow/src/types/enums')['NodeStateEnum']>
-    readonly NodeTypeEnum: UnwrapRef<typeof import('./packages/lite-flow/src/types/enums')['NodeTypeEnum']>
     readonly commonNode: UnwrapRef<typeof import('./packages/lite-flow/src/nodes/common/common-node')['default']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
